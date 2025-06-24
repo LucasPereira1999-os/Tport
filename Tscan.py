@@ -1,8 +1,11 @@
-import socket, time, random
+import socket
+import time
+import random
 import threading
 import socks
 import argparse
 from tqdm import tqdm
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -23,40 +26,30 @@ def main():
         socks.setdefaultproxy(socks.SOCKS5, "127.0.0.1", 9050)
 
     def scan_port(port, domain_temp):
-        if use_tor:
-            s = socks.socksocket()
-            ip_target = domain_temp
-        else:
-            s = socket.socket()
-            try:
-                ip_target = socket.gethostbyname(domain_temp)
-            except socket.gaierror:
-                print(f"[!] Cannot resolve {domain_temp}")
-                return
+        try:
+            ip_target = socket.gethostbyname(domain_temp)
+        except socket.gaierror as e:
+            print(f"[!] DNS Resolution Error: {e}")
+            return
 
+        s = socks.socksocket() if use_tor else socket.socket()
         s.settimeout(0.5)
 
         try:
             result = s.connect_ex((ip_target, port))
             if result == 0:
                 s.send(f"GET / HTTP/1.1\r\nHost: {domain_temp}\r\nUser-Agent: Mozilla/5.0\r\n\r\n".encode())
-                try:
-                    response = s.recv(1024)
-                    response.decode(errors="ignore")
-                except:
-                    pass
-
+                _ = s.recv(1024).decode(errors="ignore")
                 with lock:
                     with open("scan_file.txt", "a") as f:
                         f.write(f"Port : {port} | OPEN\n")
-
         except:
             pass
         finally:
             s.close()
             with lock:
                 progress.update(1)
-            time.sleep(random.uniform(0.1, 0.3))
+            time.sleep(random.uniform(0.3, 1.5))
 
     def wait_tor():
         while True:
@@ -73,14 +66,15 @@ def main():
         wait_tor()
 
     threads = []
-    for i in ports:
-        t = threading.Thread(target=scan_port, args=(i, args.Domain))
+    for port in ports:
+        t = threading.Thread(target=scan_port, args=(port, args.Domain))
         t.start()
         threads.append(t)
         time.sleep(0.05)
 
-    for k in threads:
-        k.join()
+    for thread in threads:
+        thread.join()
+
 
 if __name__ == "_main_":
     main()
