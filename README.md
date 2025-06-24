@@ -1,3 +1,5 @@
+![Tscan logo update](https://github.com/user-attachments/assets/a5916a1a-5fff-4cc7-8b7d-88136f320351)
+)
 # 💫 About Me:
 👨‍💻 About Me<br><br>Hi there! 👋<br>I'm an aspiring ethical hacker passionate about everything offensive security — especially Web Exploitation 🌐 and Malware Development 🐍💣.<br><br>Currently sharpening my skills through hands-on learning at platforms like:<br><br>🧠 Hack The Box<br><br>🛡️ PortSwigger Web Security Academy<br><br>🔍 APISEC University<br><br><br>I enjoy breaking (and fixing) things to better understand how systems work from the inside. Whether it’s bypassing filters, crafting payloads, or analyzing malware behavior, I’m always exploring and learning more every day.<br><br>🔧 Interests<br><br>Web application vulnerabilities (XSS, SSRF, IDOR, etc.)<br><br>Malware analysis and AV/EDR evasion techniques<br><br>Automation, scripting, and red team tooling<br><br><br>🧠 Mindset<br><br>> "Learn. Break. Understand. Repeat."
 
