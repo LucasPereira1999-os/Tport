@@ -1,2 +1,3 @@
 SocksiPy_branch==1.01
 tqdm==4.67.1
+pysocks
